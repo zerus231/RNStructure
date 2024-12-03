@@ -1,4 +1,3 @@
-import { selectIsProcessing, setIsProcessing } from '@screens/Home/homeSlice';
 import UseJwtAuth from '@src/features/auth/useJwtAuth';
 import React, { useState } from 'react';
 import {
@@ -10,13 +9,11 @@ import {
   View,
 } from 'react-native';
 import 'react-native-get-random-values';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useDispatch } from 'react-redux';
+import { v4 } from 'uuid'
 export const LoginScreen = ({ navigation }: any) => {
   const dispatch = useDispatch();
   const { signIn } = UseJwtAuth();
-  const isProcessing = useSelector(selectIsProcessing)
-  console.log(isProcessing);
   
   const [email, setEmail] = useState('emilys');
   const [password, setPassword] = useState('emilyspass');
@@ -26,8 +23,8 @@ export const LoginScreen = ({ navigation }: any) => {
     const data = {
       username: email,
       password,
-      // uuid: uuidv4(),
-      // time_zone: new Intl.DateTimeFormat().resolvedOptions().timeZone,
+      uuid: v4(),
+      time_zone: new Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
 
     // Kiểm tra xem signIn có tồn tại không
@@ -64,11 +61,6 @@ export const LoginScreen = ({ navigation }: any) => {
         secureTextEntry
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => {
-        dispatch(setIsProcessing(true))
-      }}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 

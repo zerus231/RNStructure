@@ -1,15 +1,14 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '../screens/Home/HomeScreen';
-import BottomTab from './BottomTab';
-import { route } from './route';
-import { NavigationContainer } from '@react-navigation/native';
+import SCREENS from '@src/constants/screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import BottomTab from './BottomTab';
+import { routeAuthenticated } from './routeAuthenticated';
 
 const Stack = createStackNavigator();
 const MainStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
-    <Stack.Screen name="MAIN_SCREEN" component={BottomTab} />
-    {route.map(item => (
+    <Stack.Screen name={SCREENS.MAIN} component={BottomTab} />
+    {routeAuthenticated.map(item => (
       <Stack.Screen
         key={item.name}
         name={item.name}
@@ -23,8 +22,3 @@ export const AuthenticatedStack = () => (
     <MainStack />
   </SafeAreaProvider>
 );
-
-{/* <Stack.Navigator screenOptions={{ headerShown: false }}>
-<Stack.Screen name="MAIN_SCREEN" component={BottomTab} />
-<Stack.Screen name="Home" component={HomeScreen} />
-</Stack.Navigator> */}

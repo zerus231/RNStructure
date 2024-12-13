@@ -1,3 +1,4 @@
+import { Loading } from '@components/Loading';
 import UseJwtAuth from '@src/features/auth/useJwtAuth';
 import React, { useState } from 'react';
 import {
@@ -9,12 +10,9 @@ import {
   View,
 } from 'react-native';
 import 'react-native-get-random-values';
-import { useDispatch } from 'react-redux';
-import { v4 } from 'uuid'
+import { v4 } from 'uuid';
 export const LoginScreen = ({ navigation }: any) => {
-  const dispatch = useDispatch();
-  const { signIn } = UseJwtAuth();
-  
+  const { signIn, isLoading } = UseJwtAuth();
   const [email, setEmail] = useState('emilys');
   const [password, setPassword] = useState('emilyspass');
   const handleLogin = () => {
@@ -27,7 +25,6 @@ export const LoginScreen = ({ navigation }: any) => {
       time_zone: new Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
 
-    // Kiểm tra xem signIn có tồn tại không
     if (!signIn) {
       return Alert.alert('SignIn function is not available.');
     }
@@ -39,8 +36,7 @@ export const LoginScreen = ({ navigation }: any) => {
       });
   };
 
-  const navigateToSignup = () => navigation.navigate('Signup');
-
+  if (isLoading) return <Loading />;
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -65,9 +61,6 @@ export const LoginScreen = ({ navigation }: any) => {
       </TouchableOpacity>
 
       <Text style={styles.signupText}>Don&apos;t have an account?</Text>
-      <TouchableOpacity onPress={navigateToSignup} disabled={false}>
-        <Text style={styles.link}>Sign up</Text>
-      </TouchableOpacity>
     </View>
   );
 };

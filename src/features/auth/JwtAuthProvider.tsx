@@ -214,6 +214,7 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
     handleFailure: (T: AxiosError) => void
   ): Promise<User | AxiosError> => {
     try {
+      setIsLoading(true);
       const response: AxiosResponse<{ user: User; accessToken: string }> = await axios.post(url, data);
       const userData = response?.data?.user;
       const accessToken = response?.data?.accessToken;
@@ -222,8 +223,8 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
 
       return userData;
     } catch (error) {
+      setIsLoading(false);
       const axiosError = error as AxiosError;
-      console.log(axiosError);
       handleFailure(axiosError);
 
       return axiosError;

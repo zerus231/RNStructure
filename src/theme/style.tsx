@@ -3,9 +3,6 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   inner: {
     flex: 1,
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
